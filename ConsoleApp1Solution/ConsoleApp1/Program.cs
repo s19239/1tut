@@ -20,6 +20,13 @@ namespace ConsoleApp1
             {
                 throw new ArgumentException("parameter is null");
             }
+            bool corr = Uri.TryCreate(args[0], UriKind.Absolute, out Uri uriResult)
+                &&  (uriResult.Scheme == Uri.UriSchemeHttps || uriResult.Scheme == Uri.UriSchemeHttp);
+            if (!corr)
+            {
+                throw new ArgumentException("Url is not correct");
+            }
+
                 HttpClient client = new HttpClient();
             HttpResponseMessage res = await  client.GetAsync(args[0]);
             if (res.IsSuccessStatusCode)
